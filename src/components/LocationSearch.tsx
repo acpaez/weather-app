@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Search, MapPin } from "lucide-react";
 
 interface LocationSearchProps {
-  onSearch?: (location: string) => void
+  readonly onSearch?: (location: string) => void
 }
 
 export function LocationSearch({ onSearch }: LocationSearchProps) {
