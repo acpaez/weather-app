@@ -21,7 +21,7 @@ export function WeatherCard({ weatherCard }: Readonly<CardProps>) {
           {weatherCard.location || "Unknown Location"}
         </div>
         <div className="text-left text-6xl font-light mt-2 text-foreground">
-          {weatherCard.temperature ? `${weatherCard.temperature}°` : "--°"}
+          {weatherCard.temperature}°
         </div>
       </div>
       <div className="flex items-center gap-4 mt-6 text-sm text-muted-foreground">

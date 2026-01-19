@@ -3,9 +3,10 @@ import { LocationSearch } from "./LocationSearch";
 type HeaderProps = Readonly<{
   title: string;
   date: string;
+  setCity: (city: string) => void;
 }>;
 
-function Header({ title, date }: HeaderProps) {
+function Header({ title, date, setCity }: HeaderProps) {
   return (
     <header className="mb-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -14,9 +15,7 @@ function Header({ title, date }: HeaderProps) {
           <p className="text-sm text-muted-foreground">{date}</p>
         </div>
         <div className="w-full md:w-80">
-          <LocationSearch
-            onSearch={(location) => console.log("Searching for:", location)}
-          />
+          <LocationSearch onSearch={(location) => setCity(location)} />
         </div>
       </div>
     </header>
