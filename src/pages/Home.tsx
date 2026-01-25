@@ -4,12 +4,24 @@ import CardHourlyForest from "@/components/CardHourlyForest";
 import { WeeklyForest } from "@/components/WeeklyForest";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { useState } from "react";
+import { useGeolocation } from "@/hooks/useGeolocation";
 
 function Home() {
   const [city, setCity] = useState("Bogota");
+  const {
+    location,
+    cityName,
+    error: geoError,
+    loading: geoLoading,
+  } = useGeolocation();
+  const selectedCity = city;
   const { hourlyData, weatherCard, weatherDetails, weekDays, loading, error } =
-    useWeatherData(city);
-  if (loading) {
+    useWeatherData(selectedCity);
+
+  const isLoading = loading || geoLoading;
+  const isError = error || geoError;
+
+  if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -20,12 +32,12 @@ function Home() {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8 flex items-center justify-center min-h-screen">
         <div className="text-center bg-red-500/10 p-6 rounded-lg">
           <h2 className="text-red-500 font-bold text-xl mb-2">Error</h2>
-          <p className="text-muted-foreground">{error}</p>
+          <p className="text-muted-foreground">{isError}</p>
           <button
             onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
@@ -43,7 +55,16 @@ function Home() {
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
-      <Header title="Weather App" date="monday, 16 2026" setCity={setCity} />
+      <Header
+        title="Weather App"
+        date={new Date().toLocaleDateString("en-US", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
+        setCity={setCity}
+      />
       <div className="grid grid-cols lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <WeatherCard weatherCard={weatherCard} />

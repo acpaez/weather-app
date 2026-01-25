@@ -12,7 +12,7 @@ type CardProps = {
 export function WeatherCard({ weatherCard }: Readonly<CardProps>) {
   const IconComponent = WEATHER_ICON_MAP[weatherCard.icon] || Sun;
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10 relative">
+    <div className="w-full rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10 relative">
       <div className=" gap-4 text-sm text-muted-foreground">
         <div className="absolute top-4 right-4">
           <IconComponent size={48} className="text-foreground/50" />
@@ -48,7 +48,7 @@ export function WeatherDetailCard({
 }: Readonly<WeatherDetailCardProps>) {
   const IconComponent = WEATHER_DETAILS_ICON_MAP[icon] || Wind;
   return (
-    <div className="flex flex-col items-center gap-2 p-4 bg-white/5 rounded-lg shadow-md">
+    <div className="w-full flex flex-col items-center gap-2 p-4 bg-white/5 rounded-lg shadow-md">
       <div className="text-primary">
         <IconComponent size={24} className="text-primary" />
       </div>
@@ -66,7 +66,7 @@ export function WeatherDetailsCard({
   weatherDetails,
 }: Readonly<WeatherDetailsCardProps>) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10 grid grid-cols-2 gap-4">
+    <div className="w-full rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10 grid grid-cols-2 gap-4">
       {weatherDetails.map(({ icon, label, value }) => (
         <WeatherDetailCard
           key={label}

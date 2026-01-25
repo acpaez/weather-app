@@ -87,7 +87,7 @@ export function useWeatherData(city: string = "Bogota") {
         setWeekDays(days);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Error desconocido");
-        console.log("Error fetching weather", error);
+        console.error("Error fetching weather", error);
       } finally {
         setLoading(false);
       }

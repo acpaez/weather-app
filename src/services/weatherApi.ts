@@ -41,6 +41,7 @@ interface ForecastResponse {
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL_GEO = import.meta.env.VITE_API_URL_GEO;
 
 function kelvinToCelsius(kelvin: number): number {
   return Math.round(kelvin - 273.15);
@@ -54,6 +55,21 @@ function mapWeatherToIcon(weatherId: number): WeatherIcon {
   if (weatherId >= 801 && weatherId <= 804) return "cloud";
   if (weatherId === 800) return "sun";
   return "cloud";
+}
+
+export async function getLatAndLonToCity(latitude: string, longitude: string) {
+  const url = `${BASE_URL_GEO}/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+  }
+
+  const data = await response.json();
+
+  return {
+    data,
+  };
 }
 
 export async function getCurrentWeather(city: string) {

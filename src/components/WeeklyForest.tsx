@@ -8,7 +8,7 @@ type WeekDayProps = {
 
 export function WeeklyForest({ weekDays }: Readonly<WeekDayProps>) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10">
+    <div className="w-full rounded overflow-hidden shadow-lg bg-white/5 p-6 mt-10">
       <div className="text-sm text-left font-medium text-muted-foreground uppercase tracking-wide">
         WEEKLY FORECAST
       </div>
