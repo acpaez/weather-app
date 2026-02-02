@@ -5,7 +5,9 @@ interface LocationSearchProps {
   readonly onSearch?: (location: string) => void;
 }
 
-export function LocationSearch({ onSearch }: LocationSearchProps) {
+export function LocationSearch({
+  onSearch,
+}: LocationSearchProps) {
   const [location, setLocation] = useState("");
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +32,6 @@ export function LocationSearch({ onSearch }: LocationSearchProps) {
         className="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
       >
         <Search className="h-5 w-5" />
-        Search
       </button>
     </form>
   );

@@ -5,9 +5,13 @@ import { WeeklyForest } from "@/components/WeeklyForest";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { useState } from "react";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { useFavorites } from "@/hooks/useFavorites";
+import { FavoritesModal } from "@/components/FavoritesModal";
 
 function Home() {
   const [city, setCity] = useState("Bogota");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
   const {
     location,
     cityName,
@@ -15,11 +19,27 @@ function Home() {
     loading: geoLoading,
   } = useGeolocation();
   const selectedCity = city;
+
   const { hourlyData, weatherCard, weatherDetails, weekDays, loading, error } =
     useWeatherData(selectedCity);
 
   const isLoading = loading || geoLoading;
   const isError = error || geoError;
+
+  const handlerAddCurrentToFavorite = () => {
+    if (weatherCard) {
+      const result = addFavorite(weatherCard.location);
+      if (result.success) {
+        alert(`${weatherCard.location} added to favorites!`);
+      } else {
+        alert(result.message);
+      }
+    }
+  };
+
+  const handleSelectFavorite = (city: string) => {
+    setCity(city);
+  };
 
   if (isLoading) {
     return (
@@ -64,6 +84,7 @@ function Home() {
           year: "numeric",
         })}
         setCity={setCity}
+        onOpenFavorites={() => setIsModalOpen(true)}
       />
       <div className="grid grid-cols lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
@@ -75,6 +96,17 @@ function Home() {
           <WeeklyForest weekDays={weekDays} />
         </div>
       </div>
+
+      <FavoritesModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        favorites={favorites}
+        onSelect={handleSelectFavorite}
+        onRemove={removeFavorite}
+        onAddCurrent={handlerAddCurrentToFavorite}
+        currentCity={weatherCard.location}
+        isCurrentFavorite={isFavorite(weatherCard.location)}
+      />
     </div>
   );
 }
